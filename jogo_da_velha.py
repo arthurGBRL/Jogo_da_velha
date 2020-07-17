@@ -1,8 +1,9 @@
 import pygame
 from pygame.locals import *
 import os
-current_path = os.path.dirname(__file__) # Where your .py file is located
-
+caminho_atual = os.path.dirname(__file__) # localização deste arquivo
+imagens = os.path.join(caminho_atual, "Imagens")
+branco = (0,0,0)
 altura = 600
 largura = 800
 
@@ -36,9 +37,9 @@ def botao(quadro, proximo_estado = " "):
             quadro.mudar_propriedade("o")
 
 def cria_botoes(contador):
-    for i in range(len(quadros)):
-        for j in range(len(quadros[i])):
-            botao(quadros[i][j], "o" if contador%2 == 0 else "x")
+    for linha in range(len(quadros)):
+        for quadro in range(len(quadros[linha])):
+            botao(quadros[linha][quadro], "o" if contador%2 == 0 else "x") # Para mudar a ordem dos jogadores, é só inverter "o" e "x"
 
 def checa_botoes(quadros):
     contador = 0
@@ -98,9 +99,9 @@ x = 0
 y = 0
 pygame.init()
 pygame.display.set_caption('Jogo da Velha')
-backgroundImg = pygame.image.load(os.path.join(current_path, 'Base.png'))
-XImg = pygame.image.load(os.path.join(current_path, 'Xis.png'))
-OImg = pygame.image.load(os.path.join(current_path, 'Bola.png'))
+backgroundImg = pygame.image.load(os.path.join(imagens, 'Base.png'))
+XImg = pygame.image.load(os.path.join(imagens, 'Xis.png'))
+OImg = pygame.image.load(os.path.join(imagens, 'Bola.png'))
 gameDisplay = pygame.display.set_mode((largura,altura))
 clock = pygame.time.Clock()
 crashed = False
@@ -123,7 +124,7 @@ while not crashed:
                 gameDisplay.blit(OImg, (int(quadro.centro[0] - quadro.largura/2),int(quadro.centro[1] - quadro.altura/2)))
     if checador_ganhou(quadros) != " ":
         print(checador_ganhou(quadros), "ganhou")
-        crashed = True
+        
     pygame.display.update()
     clock.tick(30)
 
