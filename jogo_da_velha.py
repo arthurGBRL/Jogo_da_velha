@@ -62,7 +62,6 @@ def checador_vertical(quadros):
             if i == 0:
                 if quadros[i][j].estado == quadros[i+1][j].estado == quadros[i+2][j].estado:
                     if quadros[i][j].estado != " ":
-                        print(quadros[i][j].estado)
                         return quadros[i][j].estado
     return " "
 
@@ -94,7 +93,6 @@ posicoes = [
     [(133.33,500),(400.33,500),(666.99,500)]
 ]
 quadros = [[Quadro(centro) for centro in linha] for linha in posicoes]
-[[print(quadro) for quadro in linha] for linha in quadros]
 x = 0
 y = 0
 pygame.init()
@@ -107,8 +105,7 @@ clock = pygame.time.Clock()
 crashed = False
 
 
-while not crashed:
-
+while checador_ganhou(quadros) == " ":
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             crashed = True
@@ -122,11 +119,10 @@ while not crashed:
                 gameDisplay.blit(XImg, (int(quadro.centro[0] - quadro.largura/2),int(quadro.centro[1] - quadro.altura/2)))
             elif quadro.estado == "o":
                 gameDisplay.blit(OImg, (int(quadro.centro[0] - quadro.largura/2),int(quadro.centro[1] - quadro.altura/2)))
-    if checador_ganhou(quadros) != " ":
-        print(checador_ganhou(quadros), "ganhou")
         
     pygame.display.update()
     clock.tick(30)
 
+print(checador_ganhou(quadros), "ganhou")
 pygame.quit()
 quit()
